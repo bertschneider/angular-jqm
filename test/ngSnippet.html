@@ -22,6 +22,10 @@
                 }
             });
         });
+		mod.controller('flipController', function($scope) {
+			$scope.label = 'Awesome label';
+			$scope.someModel = 1;
+		});
     </script>
 
     <script type="text/ng-template" id="main.html">
@@ -30,6 +34,7 @@
             <h1>Main page</h1>
             <a href="#/page2.html">To page2</a>
             <!-- put your sample code here -->
+			<a href="#/flip.html">To Flip</a>
         </div>
     </script>
 
@@ -39,6 +44,15 @@
             <h1>Page 2</h1>
         </div>
     </script>
+	
+	<script type="text/ng-template" id="flip.html">
+        <div jqm-page ng-controller="flipController">
+            <h1>Flip Switch Test</h1>
+            <div jqm-flip id="flip-1" ng-model="someModel" on-label="on" on-value="1" off-label="off" off-value="0">{{label}}</div>
+			<p>Model: {{someModel}}</p>
+        </div>
+    </script>
+	
 </head>
 
 <body jqm-viewport>

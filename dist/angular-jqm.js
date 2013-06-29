@@ -1,4 +1,4 @@
-/*! angular-jqm - v0.0.1-SNAPSHOT - 2013-06-27
+/*! angular-jqm - v0.0.1-SNAPSHOT - 2013-06-30
  * https://github.com/opitzconsulting/angular-jqm
  * Copyright (c) 2013 OPITZ CONSULTING GmbH; Licensed MIT */
 (function(window, angular) {
@@ -581,6 +581,64 @@ jqmModule.directive('jqmControlgroup', function() {
         this.$scope = $scope;
     }
 });
+jqmModule.directive('jqmFlip', [function () {
+    return {
+        restrict: 'A',
+        transclude: true,
+        replace: true,
+        // Templates can only have one root node, this does not match with the required jQuery Mobile code.
+        // So everything is wrapped in another div layer ... this layer also establishes a new scope
+        templateUrl: 'templates/jqmFlip.html',
+        scope: {},
+        require: ['?ngModel'],
+        link: function (scope, element, attr, ctrls) {
+            var ngModelCtrl = ctrls[0];
+
+            observeParameters();
+            initToggleState();
+            bindClick();
+
+            function observeParameters () {
+                attr.$observe('onLabel', function (value) {
+                    scope.onLabel = value;
+                });
+                attr.$observe('onValue', function (value) {
+                    scope.onValue = value;
+                });
+                attr.$observe('offLabel', function (value) {
+                    scope.offLabel = value;
+                });
+                attr.$observe('offValue', function (value) {
+                    scope.offValue = value;
+                });
+            }
+
+            function initToggleState () {
+                ngModelCtrl.$render = updateToggleStyle();
+                ngModelCtrl.$viewChangeListeners.push(updateToggleStyle);
+            };
+
+            function updateToggleStyle () {
+                var toggled = isToggled();
+                scope.toggleLabel = toggled ? scope.onLabel : scope.offLabel;
+                scope.onStyle = toggled ? 100 : 0;
+                scope.offStyle = toggled ? 0: 100;
+            }
+
+            function bindClick () {
+                scope.toggle = function () {
+                    ngModelCtrl.$setViewValue(isToggled() ? scope.offValue : scope.onValue);
+                };
+            }
+
+            function isToggled () {
+                return ngModelCtrl.$viewValue == scope.onValue;
+            }
+
+        }
+    };
+}]);
+
 
 /**
  * Sets the given class string once, with no watching.
@@ -1130,7 +1188,7 @@ jqmModule.config(['$provide', function ($provide) {
 
     }]);
 }]);
-angular.module('jqm-templates', ['templates/jqmCheckbox.html', 'templates/jqmControlgroup.html']);
+angular.module('jqm-templates', ['templates/jqmCheckbox.html', 'templates/jqmControlgroup.html', 'templates/jqmFlip.html']);
 
 angular.module("templates/jqmCheckbox.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/jqmCheckbox.html",
@@ -1163,5 +1221,29 @@ angular.module("templates/jqmControlgroup.html", []).run(["$templateCache", func
     "    </div>\n" +
     "    <div class=\"ui-controlgroup-controls\" ng-transclude jqm-position-anchor></div>\n" +
     "</fieldset>");
+}]);
+
+angular.module("templates/jqmFlip.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/jqmFlip.html",
+    "<div jqm-scope-as=\"jqmFlip\">\n" +
+    "        <label for=\"flip-1\" class=\"ui-slider\" ng-transclude></label>\n" +
+    "        <!--<select name=\"flip-1\" id=\"flip-1\" class=\"ui-slider-switch\">\n" +
+    "                <option value=\"{{$scopeAs.jqmFlip.offValue}}\" ng-selected=\"!$scopeAs.jqmFlip.toggled\">{{$scopeAs.jqmFlip.offLabel}}</option>\n" +
+    "                <option value=\"{{$scopeAs.jqmFlip.onValue}}\" ng-selected=\"$scopeAs.jqmFlip.toggled\">{{$scopeAs.jqmFlip.onLabel}}</option>\n" +
+    "        </select>-->\n" +
+    "        <div class=\"ui-slider ui-slider-switch ui-btn-down-c ui-btn-corner-all\"\n" +
+    "             ng-click=\"$scopeAs.jqmFlip.toggle()\">\n" +
+    "                <span class=\"ui-slider-label ui-slider-label-a ui-btn-active ui-btn-corner-all\" style=\"width: {{$scopeAs.jqmFlip.onStyle}}%;\">{{$scopeAs.jqmFlip.onLabel}}</span>\n" +
+    "                <span class=\"ui-slider-label ui-slider-label-b ui-btn-down-c ui-btn-corner-all\" style=\"width: {{$scopeAs.jqmFlip.offStyle}}%;\">{{$scopeAs.jqmFlip.offLabel}}</span>\n" +
+    "                <div class=\"ui-slider-inneroffset\">\n" +
+    "                  <a class=\"ui-slider-handle ui-slider-handle-snapping ui-btn ui-btn-corner-all ui-btn-up-c ui-shadow\"\n" +
+    "                     title=\"{{$scopeAs.jqmFlip.toggleLabel}}\"\n" +
+    "                     style=\"left: {{$scopeAs.jqmFlip.onStyle}}%;\">\n" +
+    "                    <span class=\"ui-btn-inner\"><span class=\"ui-btn-text\"></span></span>\n" +
+    "                  </a>\n" +
+    "                </div>\n" +
+    "        </div>\n" +
+    "</div>\n" +
+    "");
 }]);
 })(window, angular);

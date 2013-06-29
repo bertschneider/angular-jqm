@@ -1,0 +1,19 @@
+<div jqm-scope-as="jqmFlip">
+        <label for="flip-1" class="ui-slider" ng-transclude></label>
+        <!--<select name="flip-1" id="flip-1" class="ui-slider-switch">
+                <option value="{{$scopeAs.jqmFlip.offValue}}" ng-selected="!$scopeAs.jqmFlip.toggled">{{$scopeAs.jqmFlip.offLabel}}</option>
+                <option value="{{$scopeAs.jqmFlip.onValue}}" ng-selected="$scopeAs.jqmFlip.toggled">{{$scopeAs.jqmFlip.onLabel}}</option>
+        </select>-->
+        <div class="ui-slider ui-slider-switch ui-btn-down-c ui-btn-corner-all"
+             ng-click="$scopeAs.jqmFlip.toggle()">
+                <span class="ui-slider-label ui-slider-label-a ui-btn-active ui-btn-corner-all" style="width: {{$scopeAs.jqmFlip.onStyle}}%;">{{$scopeAs.jqmFlip.onLabel}}</span>
+                <span class="ui-slider-label ui-slider-label-b ui-btn-down-c ui-btn-corner-all" style="width: {{$scopeAs.jqmFlip.offStyle}}%;">{{$scopeAs.jqmFlip.offLabel}}</span>
+                <div class="ui-slider-inneroffset">
+                  <a class="ui-slider-handle ui-slider-handle-snapping ui-btn ui-btn-corner-all ui-btn-up-c ui-shadow"
+                     title="{{$scopeAs.jqmFlip.toggleLabel}}"
+                     style="left: {{$scopeAs.jqmFlip.onStyle}}%;">
+                    <span class="ui-btn-inner"><span class="ui-btn-text"></span></span>
+                  </a>
+                </div>
+        </div>
+</div>
