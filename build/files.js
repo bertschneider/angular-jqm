@@ -8,6 +8,7 @@
 "src/directives/jqmCachingView.js",
 "src/directives/jqmCheckbox.js",
 "src/directives/jqmControlgroup.js",
+"src/directives/jqmFlip.js",
 "src/directives/jqmLiLink.js",
 "src/directives/jqmLiEntry.js",
 "src/directives/jqmListview.js",

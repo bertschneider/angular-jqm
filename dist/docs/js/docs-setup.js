@@ -38,6 +38,13 @@ NG_DOCS={
       "shortName": "jqmCheckbox",
       "type": "directive",
       "keywords": "angular anything api assignable be below can checkbox checky creates data-bind directive disable disabled disably element expression for given got guy html icon iconpos index inside is isdisabled jqm jqm-checkbox jquery label left me mini mobile module my name ng-false-value ng-model ng-true-value ngfalsevalue ngmodel ngtruevalue no not of on options or position right selected set should some tag the this to toggle true value ve when whether which will yes"
+    },
+    {
+      "section": "api",
+      "id": "jqm.directive:jqmFlip",
+      "shortName": "jqmFlip",
+      "type": "directive",
+      "keywords": "angular anything api assignable be creates data-bind directive disabled element expression flip fliped given html index inside is jqm jqm-flip jquery label mobile module my name ng-model ngmodel ngofflabel ngoffvalue ngonlabel ngonvalue off off-label off-value on on-label on-value set should shown switch tag the this to value when whether which will"
     }
   ],
   "apis": {
