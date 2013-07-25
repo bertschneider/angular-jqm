@@ -63,8 +63,8 @@ jqmModule.directive('jqmFlip', [function () {
 
             scope.theme = scope.$theme || 'c';
             scope.isMini = isMini;
-            scope.onValue = scope.onValue || true;
-            scope.offValue = scope.offValue || false;
+            scope.onValue = angular.isDefined(attr.onValue) ? scope.onValue : true;
+            scope.offValue = angular.isDefined(attr.offValue) ? scope.offValue : false;
 
             initToggleState();
             bindClick();
